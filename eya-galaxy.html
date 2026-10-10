@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eya Hamdaoui | Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400..600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05060F;--ink:#E9ECFA;--mute:#9AA3C7;--line:rgba(255,255,255,.15);--glass:rgba(14,17,40,.66);--acc:#9A8DFF;--acc2:#4FE3D0;
+  --head:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;--body:"Newsreader",Georgia,serif;
+  --top:env(safe-area-inset-top,0px);--bot:env(safe-area-inset-bottom,0px);box-sizing:border-box}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1.05rem;line-height:1.55;overflow:hidden}
+#c{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#c.hot{cursor:pointer}
+:focus-visible{outline:2px solid var(--acc2);outline-offset:3px;border-radius:8px}
+.title{position:fixed;left:1.25rem;top:calc(var(--top) + 1.1rem);pointer-events:none;max-width:min(30rem,70vw);animation:in 1.2s cubic-bezier(.2,.8,.2,1) both}
+.title h1{font-family:var(--head);font-weight:800;font-size:clamp(2.1rem,6vw,4rem);letter-spacing:-.04em;line-height:.95;margin:0;
+  background:linear-gradient(100deg,var(--acc2),var(--acc) 55%,var(--ink));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.title p{margin:.6rem 0 0;color:var(--mute);font-size:1rem}
+.hint{margin-top:.9rem;font-family:var(--head);font-size:.85rem;color:var(--acc2);opacity:.9}
+@keyframes in{from{opacity:0;transform:translateY(20px);filter:blur(8px)}}
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--bot) + 1rem);display:flex;gap:.25rem;padding:.35rem;
+  background:var(--glass);border:1px solid var(--line);border-radius:99px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);max-width:calc(100% - 1.2rem);overflow-x:auto}
+nav button{font:500 .92rem var(--head);color:var(--mute);background:none;border:0;border-radius:99px;padding:.55rem .95rem;cursor:pointer;white-space:nowrap;transition:.2s}
+nav button:hover{color:var(--ink)}
+nav button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+aside{position:fixed;right:1.25rem;top:calc(var(--top) + 1.1rem);bottom:calc(var(--bot) + 5rem);width:min(390px,calc(100% - 2.5rem));overflow-y:auto;
+  background:var(--glass);border:1px solid var(--line);border-radius:20px;padding:1.3rem 1.3rem 1.5rem;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:in .5s both}
+aside[hidden]{display:none}
+aside h2{font:700 1.6rem var(--head);letter-spacing:-.02em;margin:0 2rem .7rem 0}
+aside h3{font:600 1.05rem var(--head);margin:1.1rem 0 .3rem;color:var(--acc2)}
+aside p{margin:0 0 .8rem}
+.x{position:absolute;right:.8rem;top:.8rem;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--ink);font-size:1.1rem;cursor:pointer}
+.list{list-style:none;padding:0;margin:0;font-family:var(--head)}
+.list li{padding:.45rem 0;border-bottom:1px solid var(--line);color:var(--mute);font-size:.95rem}
+.list b{color:var(--ink);font-weight:600}
+.pl{display:grid;gap:.3rem;margin:0;padding:0;list-style:none}
+.pl button{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:.7rem;width:100%;cursor:pointer;font:500 .98rem var(--head);padding:.55rem .6rem;border-radius:10px}
+.pl button:hover,.pl button:focus-visible{background:rgba(255,255,255,.07)}
+.dot{width:12px;height:12px;border-radius:50%;flex:none;box-shadow:0 0 10px currentColor}
+.tag{font:.85rem var(--head);color:var(--mute)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;padding:0;margin:.8rem 0;list-style:none;font:.85rem var(--head)}
+.chips li{border:1px solid var(--line);border-radius:99px;padding:.25rem .75rem;color:var(--mute)}
+.btn{display:inline-block;font:600 .95rem var(--head);color:#05060F;background:var(--acc2);border:0;border-radius:10px;padding:.55rem 1.1rem;text-decoration:none;cursor:pointer;margin:.3rem .4rem .3rem 0}
+.btn.alt{background:none;color:var(--ink);border:1px solid var(--line)}
+.mono{font:.85rem/1.5 ui-monospace,Menlo,Consolas,monospace;word-break:break-all;color:var(--mute)}
+#tip{position:fixed;pointer-events:none;font:600 .85rem var(--head);background:var(--ink);color:var(--bg);padding:.3rem .65rem;border-radius:8px;opacity:0;transition:opacity .15s;transform:translate(14px,14px);z-index:5}
+#fail{display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;color:var(--mute);font-family:var(--head)}
+@media(max-width:700px){
+  aside{left:.75rem;right:.75rem;top:auto;width:auto;bottom:calc(var(--bot) + 4.6rem);max-height:52vh}
+  .title{left:1rem}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="Interactive 3D galaxy: each planet is one of Eya's projects"></canvas>
+<div id="fail">Your browser could not start 3D. Use the menu below.</div>
+<div class="title">
+  <h1>Eya Hamdaoui</h1>
+  <p>Software Engineering and Information Systems student at Université Centrale</p>
+  <div class="hint" id="hint">Move your mouse and click a planet. Each one is a project.</div>
+</div>
+<aside id="panel" hidden aria-live="polite"><button class="x" id="close" aria-label="Close panel">×</button><h2 id="ptitle"></h2><div id="pbody"></div></aside>
+<nav id="tabs" aria-label="Sections">
+  <button data-v="about">About</button><button data-v="skills">Skills</button><button data-v="badge">Badge</button><button data-v="projects">Projects</button><button data-v="contact">Contact</button>
+</nav>
+<div id="tip"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+var COL={"Algorithms and validation":0x9A8DFF,"Business tools":0x4FE3D0,"Games":0xFF8FB1,"Tools":0xFFC857,"Web":0x6EC1FF};
+var G="https://github.com/EYA-EYA1/";
+var P=[
+["Algorithme de Luhn","Algorithms and validation","Validates card and identification numbers using the Luhn checksum algorithm.","Algorithme-de-Luhn"],
+["Validation de code-barres EAN-13","Algorithms and validation","Checks EAN-13 barcodes by recomputing the check digit and comparing it with the last digit.","Validation-de-Code-Barres-EAN-13"],
+["Générateur d'IBAN","Algorithms and validation","Generates IBAN numbers with a country code, account number, and mod-97 check digits.","GENERATEUR-D-IBAN"],
+["Chiffre de César","Algorithms and validation","Encrypts and decrypts messages with the Caesar cipher using a chosen shift key.","-CHIFFRE-DE-CESAR-"],
+["Calcul de la TVA et gestion de facture","Business tools","Calculates VAT on product prices and produces invoice totals.","Calcul-de-la-TVA-et-Gestion-de-Facture"],
+["Système de réservation de sièges","Business tools","Seat reservation system that shows free seats and prevents double booking.","SYSTEME-DE-RESERVATION-DE-SIEGES"],
+["Système de gestion","Business tools","Management system with add, view, update, and delete operations.","Syst-me-de-gestion"],
+["Carnet d'adresses","Business tools","Address book to add, search, edit, and delete contacts.","Carnet-d-adresses"],
+["Jeu du pendu","Games","Hangman word-guessing game where the player guesses letters before running out of attempts.","-JEU-DU-PENDU-"],
+["Advanced calculator","Tools","Calculator with advanced operations beyond basic arithmetic.","-advancede-calculator-"],
+["University portal","Web","Web portal that brings university information together for students.","university-portal"]];
+var EMAIL="eyahamdaoui4@gmail.com";
+var $=function(id){return document.getElementById(id)};
+var panel=$("panel"),ptitle=$("ptitle"),pbody=$("pbody"),tabs=$("tabs"),sel=-1;
+
+var V={
+about:["About",function(){return '<p>I am a Software Engineering and Information Systems student at Université Centrale. My focus is Python, SQL, and networking, and I practise by building small, complete programs and publishing them on GitHub.</p><p>I also learn to work with AI agents: writing clear prompts, automating workflows, and using AI responsibly. I am studying English at the British Council, from A1 to B2, and I am currently at B2.</p>'}],
+skills:["Skills",function(){return '<h3>Core</h3><ul class="list"><li><b>Python</b> Programs, algorithms, automation scripts</li><li><b>SQL</b> Databases for information systems</li><li><b>Networking</b> Fundamentals studied at university</li><li><b>English</b> British Council, currently B2</li></ul><h3>AI</h3><ul class="list"><li><b>Prompt engineering</b> Working with AI agents</li><li><b>AI literacy</b> What AI can and cannot do</li><li><b>Responsible AI</b> Safe use with human review</li><li><b>Workflow automation</b> Repeatable tasks</li></ul><h3>Workflow</h3><ul class="list"><li><b>Git and GitHub</b> Comfortable with Git commands and the GitHub workflow</li><li><b>Algorithms</b> Luhn, EAN-13, Caesar</li></ul>'}],
+badge:["Microsoft AI Skills Fest 2026",function(){return '<p>Official Microsoft badge for demonstrating AI skills. The credential does not expire.</p><ul class="chips"><li>AI application building</li><li>Automation</li><li>Prompt engineering</li><li>AI literacy</li><li>AI tools adoption</li><li>Guided AI</li><li>Responsible AI</li><li>Workflow automation</li></ul><h3>Issued</h3><p>June 19, 2026</p><h3>Credential ID</h3><div class="mono">3c33842e-c0c2-4e1e-aaca-61789ded7f16</div>'}],
+projects:["Projects",function(){return '<p>Eleven projects orbit the sun. Pick one here or click a planet.</p><ul class="pl">'+P.map(function(p,i){return '<li><button data-i="'+i+'"><span class="dot" style="color:#'+COL[p[1]].toString(16).padStart(6,"0")+';background:currentColor"></span><span>'+p[0]+'</span></button></li>'}).join("")+'</ul>'}],
+contact:["Contact",function(){return '<p>Looking for an internship in software or AI. Write to me or see my code.</p><a class="btn" href="mailto:'+EMAIL+'">'+EMAIL+'</a><a class="btn alt" href="https://github.com/EYA-EYA1" target="_blank" rel="noopener">GitHub</a><button class="btn alt" id="copy" type="button">Copy email</button>'}]
+};
+function mark(v){Array.prototype.forEach.call(tabs.children,function(b){b.setAttribute("aria-selected",b.dataset.v===v)})}
+function view(v){
+  sel=-1;mark(v);ptitle.textContent=V[v][0];pbody.innerHTML=V[v][1]();panel.hidden=false;
+  Array.prototype.forEach.call(pbody.querySelectorAll("[data-i]"),function(b){b.addEventListener("click",function(){pick(+b.dataset.i)})});
+  var c=$("copy");if(c)c.addEventListener("click",function(){function ok(){c.textContent="Copied";setTimeout(function(){c.textContent="Copy email"},1500)}try{navigator.clipboard.writeText(EMAIL).then(ok,ok)}catch(e){ok()}});
+}
+function pick(i){
+  sel=i;var p=P[i];mark("projects");ptitle.textContent=p[0];
+  pbody.innerHTML='<div class="tag">'+p[1]+'</div><p style="margin-top:.6rem">'+p[2]+'</p><a class="btn" href="'+G+p[3]+'" target="_blank" rel="noopener">View on GitHub</a><button class="btn alt" id="back" type="button">All projects</button>';
+  $("back").addEventListener("click",function(){view("projects")});panel.hidden=false;
+}
+function shut(){panel.hidden=true;sel=-1;mark("")}
+tabs.addEventListener("click",function(e){var b=e.target.closest("button");if(b)view(b.dataset.v)});
+$("close").addEventListener("click",shut);
+addEventListener("keydown",function(e){if(e.key==="Escape")shut()});
+view("about");
+
+/* 3D */
+var cv=$("c"),R;
+try{R=new THREE.WebGLRenderer({canvas:cv,antialias:true});}catch(e){R=null}
+if(!R){$("fail").style.display="block";return}
+R.setPixelRatio(Math.min(devicePixelRatio||1,2));R.setClearColor(0x05060F,1);
+var S=new THREE.Scene(),cam=new THREE.PerspectiveCamera(55,1,.1,400);
+var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+// stars
+var N=2000,pos=new Float32Array(N*3);
+for(var i=0;i<N;i++){var r=70+Math.random()*130,t=Math.random()*6.283,u=Math.acos(2*Math.random()-1);
+  pos[i*3]=r*Math.sin(u)*Math.cos(t);pos[i*3+1]=r*Math.cos(u);pos[i*3+2]=r*Math.sin(u)*Math.sin(t)}
+var sg=new THREE.BufferGeometry();sg.setAttribute("position",new THREE.BufferAttribute(pos,3));
+var stars=new THREE.Points(sg,new THREE.PointsMaterial({color:0xcfd6ff,size:.55,transparent:true,opacity:.8,depthWrite:false}));
+S.add(stars);
+
+// sun + glow
+var sun=new THREE.Mesh(new THREE.SphereGeometry(1.15,48,48),new THREE.MeshBasicMaterial({color:0xFFD27A}));
+S.add(sun);
+var gc=document.createElement("canvas");gc.width=gc.height=128;var gx=gc.getContext("2d"),gr=gx.createRadialGradient(64,64,0,64,64,64);
+gr.addColorStop(0,"rgba(255,206,120,.95)");gr.addColorStop(.35,"rgba(255,150,90,.35)");gr.addColorStop(1,"rgba(255,120,80,0)");
+gx.fillStyle=gr;gx.fillRect(0,0,128,128);
+var glow=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(gc),blending:THREE.AdditiveBlending,depthWrite:false,transparent:true}));
+glow.scale.set(9,9,1);S.add(glow);
+S.add(new THREE.PointLight(0xfff0d0,2.4,0,1.2));S.add(new THREE.AmbientLight(0x6670aa,.55));
+
+// planets
+var sys=new THREE.Group();sys.rotation.x=.38;S.add(sys);
+var planets=[],hits=[];
+P.forEach(function(p,i){
+  var rad=3.5+i*.85,size=.27+((i*37)%5)*.04;
+  var m=new THREE.Mesh(new THREE.SphereGeometry(size,32,32),new THREE.MeshStandardMaterial({color:COL[p[1]],roughness:.55,metalness:.1,emissive:COL[p[1]],emissiveIntensity:.18}));
+  var h=new THREE.Mesh(new THREE.SphereGeometry(size*2.2,12,12),new THREE.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false}));
+  h.userData.i=i;m.add(h);hits.push(h);
+  m.userData={r:rad,a:i*1.9,s:.55/Math.sqrt(rad),k:1};sys.add(m);planets.push(m);
+  var pts=[];for(var j=0;j<=96;j++){var a=j/96*6.2832;pts.push(new THREE.Vector3(Math.cos(a)*rad,0,Math.sin(a)*rad))}
+  sys.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0x6a72b8,transparent:true,opacity:.28})));
+});
+
+// input
+var ray=new THREE.Raycaster(),nd=new THREE.Vector2(),mx=0,my=0,hov=-1,tip=$("tip");
+function test(e){nd.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);ray.setFromCamera(nd,cam);var h=ray.intersectObjects(hits);return h.length?h[0].object.userData.i:-1}
+cv.addEventListener("pointermove",function(e){
+  mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;
+  if(e.pointerType==="touch")return;
+  hov=test(e);cv.classList.toggle("hot",hov>=0);
+  tip.style.left=e.clientX+"px";tip.style.top=e.clientY+"px";tip.textContent=hov>=0?P[hov][0]:"";tip.style.opacity=hov>=0?1:0;
+});
+cv.addEventListener("click",function(e){var i=test(e);if(i>=0){pick(i);$("hint").style.opacity=0}else if(sel>=0){view("projects")}});
+
+function size(){var w=innerWidth,h=innerHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}
+addEventListener("resize",size);size();
+
+var clock=new THREE.Clock(),look=new THREE.Vector3(),tp=new THREE.Vector3(),cp=new THREE.Vector3(),off=new THREE.Vector3(1.4,1.1,4);
+cam.position.set(0,9,26);
+(function loop(){
+  var dt=Math.min(clock.getDelta(),.05),sp=reduce?.2:1;
+  planets.forEach(function(m,i){
+    var d=m.userData;d.a+=d.s*dt*sp;m.position.set(Math.cos(d.a)*d.r,0,Math.sin(d.a)*d.r);
+    var tk=(i===sel||i===hov)?1.55:1;d.k+=(tk-d.k)*.12;m.scale.setScalar(d.k);m.rotation.y+=dt*.6;
+  });
+  sun.rotation.y+=dt*.1;glow.scale.setScalar(9+Math.sin(clock.elapsedTime*1.6)*.35);stars.rotation.y+=dt*.006*sp;
+  if(sel>=0){planets[sel].getWorldPosition(tp);cp.copy(tp).add(off)}
+  else{tp.set(0,0,0);cp.set(mx*5,6.5-my*3,innerWidth<700?27:18)}
+  cam.position.lerp(cp,.05);look.lerp(tp,.07);cam.lookAt(look);
+  R.render(S,cam);requestAnimationFrame(loop);
+})();
+})();
+</script>
+</body>
+</html>
